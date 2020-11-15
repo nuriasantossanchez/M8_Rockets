@@ -14,7 +14,6 @@ public class Rocket implements Runnable{
     private List<Booster> boosters;
     private Integer goalPower=this.getGoalPower();
     private int acumPower;
-    private boolean checkRocket=false;
 
     public Rocket(String id, int numberOfBoosters) {
 
@@ -68,12 +67,6 @@ public class Rocket implements Runnable{
         return this.boosters.stream().mapToInt((c) -> c.getCurrentPower()).sum();
     }
 
-    public void checkGoalPower(boolean check){
-        if (this.acumPower==this.getGoalPower()){
-            this.getBoosters().stream().forEach(c -> c.setState(StateRace.FINISH));
-            printWinner(check);
-        }
-    }
 
     public void printTotalPower(StateRace state){
         if(this.acumPower!=0) {
@@ -83,8 +76,9 @@ public class Rocket implements Runnable{
         }
     }
 
-    public void printWinner(boolean printed){
-        if(!printed){
+    public void printWinner(int acumPower){
+        if (acumPower==this.getGoalPower()){
+            this.getBoosters().stream().forEach(c -> c.setState(StateRace.FINISH));
             System.out.println("--------------------------------------------------");
             System.out.println("FIN DE LA CARRERA!!! Potencia alcanzada: " + this.getTotalPower());
             System.out.println("ROCKET .... " + this.toString()
@@ -92,8 +86,6 @@ public class Rocket implements Runnable{
             System.out.println("--------------------------------------------------");
         }
     }
-
-
 
     @Override
     public String toString() {
@@ -118,7 +110,7 @@ public class Rocket implements Runnable{
                                     this.acumPower = this.forward(Optional.of(this.getGoalPower()));
 
                                     printTotalPower(StateRace.FORWARD);
-                                    checkGoalPower(checkRocket);
+                                    printWinner(this.acumPower);
 
                                     booster.notifyAll();
                                     Thread.currentThread().checkAccess();
@@ -130,7 +122,7 @@ public class Rocket implements Runnable{
                                     this.acumPower = this.back(Optional.of(this.getGoalPower()));
 
                                     printTotalPower(StateRace.BACK);
-                                    checkGoalPower(checkRocket);
+                                    printWinner(this.acumPower);
 
                                     booster.notifyAll();
                                     Thread.currentThread().checkAccess();
@@ -139,7 +131,6 @@ public class Rocket implements Runnable{
                                     break;
                                 case FINISH:
                                     TimeUnit.MILLISECONDS.sleep(1000);
-                                    checkGoalPower(!checkRocket);
                                     booster.notifyAll();
                                     Thread.currentThread().checkAccess();
                                     TimeUnit.MILLISECONDS.sleep(1000);

@@ -15,7 +15,7 @@ public class MainApp {
         try {
             new RiceForward(15);
             controller.execute();
-            TimeUnit.MILLISECONDS.sleep(29000);
+            TimeUnit.MILLISECONDS.sleep(28000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
