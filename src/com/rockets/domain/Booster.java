@@ -8,7 +8,7 @@ public class Booster implements Runnable{
 
     private Optional<Integer> maxPower=Optional.empty();
     private Integer currentPower= this.getCurrentPower();
-    private boolean suspended=false;
+    private boolean suspended=true;
     private StateRace state;
 
     public Booster(Optional<Integer> maxPower) {
@@ -73,7 +73,6 @@ public class Booster implements Runnable{
                         wait();
                     }
                 }
-
                 synchronized (this) {
                     this.setSuspended(false);
                     TimeUnit.MILLISECONDS.sleep(1000);

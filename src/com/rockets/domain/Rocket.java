@@ -77,13 +77,9 @@ public class Rocket implements Runnable{
         }
     }
 
-    public boolean printWinner(int acumPower, StateRace state){
+    public boolean printWinner(int acumPower){
         boolean printed=false;
-        if (state.equals(StateRace.FORWARD) && acumPower>=this.getGoalPower()){
-            printWinner();
-            printed=true;
-        }
-        else if(state.equals(StateRace.BACK) && acumPower<=this.getGoalPower()){
+        if (acumPower==this.getGoalPower()){
             printWinner();
             printed=true;
         }
@@ -139,7 +135,7 @@ public class Rocket implements Runnable{
                                     this.acumPower = this.forward(Optional.of(this.getGoalPower()));
                                     printTotalPower(StateRace.FORWARD);
 
-                                    if(printWinner(this.acumPower, booster.getState())) {
+                                    if(printWinner(this.acumPower)) {
                                         checkWinner();
                                     }
 
@@ -153,7 +149,7 @@ public class Rocket implements Runnable{
                                     this.acumPower = this.back(Optional.of(this.getGoalPower()));
                                     printTotalPower(StateRace.BACK);
 
-                                    if(printWinner(this.acumPower, booster.getState())) {
+                                    if(printWinner(this.acumPower)) {
                                         checkWinner();
                                     }
 

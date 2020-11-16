@@ -13,4 +13,12 @@ public class RiceBack {
         this.powerBack = powerBack;
         controller.back(powerBack);
     }
+
+    public void show(){
+        System.out.println();
+        System.out.println("--------------------------------------------------");
+        System.out.println("FRENAR HASTA POTENCIA " + powerBack + " ....... ") ;
+        System.out.println("--------------------------------------------------");
+        System.out.println();
+    }
 }

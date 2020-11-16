@@ -10,10 +10,10 @@ public class MainApp {
 
     public static void main(String[] args) {
 
-        new RocketsRice();
+        new RocketsRice().show();
 
         try {
-            new RiceForward(12);
+            new RiceForward(12).show();
             controller.execute();
             TimeUnit.MILLISECONDS.sleep(30000);
         } catch (InterruptedException e) {
@@ -21,7 +21,7 @@ public class MainApp {
         }
 
         try {
-            new RiceBack(7);
+            new RiceBack(7).show();
             TimeUnit.MILLISECONDS.sleep(20000);
         } catch (InterruptedException e) {
             e.printStackTrace();

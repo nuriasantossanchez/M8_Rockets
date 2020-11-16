@@ -13,4 +13,12 @@ public class RiceForward {
         this.powerForward = powerForward;
         controller.forward(powerForward);
     }
+
+    public void show(){
+        System.out.println();
+        System.out.println("--------------------------------------------------");
+        System.out.println("ACELERAR HASTA POTENCIA " + powerForward + " ....... ") ;
+        System.out.println("--------------------------------------------------");
+        System.out.println();
+    }
 }
