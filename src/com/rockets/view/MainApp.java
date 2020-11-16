@@ -13,16 +13,16 @@ public class MainApp {
         new RocketsRice();
 
         try {
-            new RiceForward(15);
+            new RiceForward(12);
             controller.execute();
-            TimeUnit.MILLISECONDS.sleep(28000);
+            TimeUnit.MILLISECONDS.sleep(30000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
 
         try {
             new RiceBack(7);
-            TimeUnit.MILLISECONDS.sleep(15000);
+            TimeUnit.MILLISECONDS.sleep(20000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

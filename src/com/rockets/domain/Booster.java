@@ -9,7 +9,7 @@ public class Booster implements Runnable{
     private Optional<Integer> maxPower=Optional.empty();
     private Integer currentPower= this.getCurrentPower();
     private boolean suspended=false;
-    StateRace state;
+    private StateRace state;
 
     public Booster(Optional<Integer> maxPower) {
         this.maxPower = maxPower;
@@ -80,23 +80,24 @@ public class Booster implements Runnable{
                     switch (state){
                         case FORWARD:
                             TimeUnit.MILLISECONDS.sleep(1000);
-                            this.powerUp();
-                            notifyAll();
-                            System.out.println("[acelerando...] " + this.toString());
+                            if(!(Rocket.getCountRockets() < 0)){
+                                this.powerUp();
+                                notifyAll();
+                                System.out.println("[acelerando...] " + this.toString());
+                            }
                             wait();
                             break;
                         case BACK:
                             TimeUnit.MILLISECONDS.sleep(1000);
-                            this.powerDown();
-                            System.out.println("[frenando...] " + this.toString());
-                            notifyAll();
+                            if(!(Rocket.getCountRockets() < 0)){
+                                this.powerDown();
+                                notifyAll();
+                                System.out.println("[frenando...] " + this.toString());
+                            }
                             wait();
                             break;
                         case FINISH:
-                            TimeUnit.MILLISECONDS.sleep(1000);
                             notifyAll();
-                            wait();
-                            TimeUnit.MILLISECONDS.sleep(1000);
                             break;
                     }
 

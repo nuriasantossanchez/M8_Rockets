@@ -43,6 +43,7 @@ public class Controller {
     }
 
     public void forward(Integer goalPower){
+        Rocket.setCountRockets(this.rockets.size());
         for (Rocket rocket : this.rockets) {
             rocket.forward(Optional.of(goalPower));
             rocket.setGoalPower(goalPower);
@@ -51,11 +52,11 @@ public class Controller {
      }
 
     public void back(Integer goalPower){
+        Rocket.setCountRockets(this.rockets.size());
         for (Rocket rocket : this.rockets) {
             rocket.back(Optional.of(goalPower));
             rocket.setGoalPower(goalPower);
             rocket.getBoosters().stream().forEach(c->c.setState(StateRace.BACK));
-
         }
     }
 
@@ -64,6 +65,7 @@ public class Controller {
     }
 
     public void execute(){
+
         for (Rocket rocket : this.rockets) {
             CompletableFuture.runAsync(rocket, exec);
             for (Booster booster : rocket.getBoosters()) {

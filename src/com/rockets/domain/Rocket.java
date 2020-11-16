@@ -14,6 +14,7 @@ public class Rocket implements Runnable{
     private List<Booster> boosters;
     private Integer goalPower=this.getGoalPower();
     private int acumPower;
+    private static int countRockets;
 
     public Rocket(String id, int numberOfBoosters) {
 
@@ -76,16 +77,43 @@ public class Rocket implements Runnable{
         }
     }
 
-    public void printWinner(int acumPower){
-        if (acumPower==this.getGoalPower()){
-            this.getBoosters().stream().forEach(c -> c.setState(StateRace.FINISH));
-            System.out.println("--------------------------------------------------");
-            System.out.println("FIN DE LA CARRERA!!! Potencia alcanzada: " + this.getTotalPower());
-            System.out.println("ROCKET .... " + this.toString()
-                    + "  \n" + this.getBoosters().toString());
-            System.out.println("--------------------------------------------------");
+    public boolean printWinner(int acumPower, StateRace state){
+        boolean printed=false;
+        if (state.equals(StateRace.FORWARD) && acumPower>=this.getGoalPower()){
+            printWinner();
+            printed=true;
         }
+        else if(state.equals(StateRace.BACK) && acumPower<=this.getGoalPower()){
+            printWinner();
+            printed=true;
+        }
+        return printed;
+
     }
+
+    public void printWinner(){
+
+        System.out.println("--------------------------------------------------");
+        System.out.println("FIN DE LA CARRERA!!! Potencia alcanzada: " + this.getTotalPower());
+        System.out.println("ROCKET .... " + this.toString()
+                + "  \n" + this.getBoosters().toString());
+        System.out.println("--------------------------------------------------");
+
+    }
+
+    public void checkWinner(){
+        this.getBoosters().stream().forEach(c -> c.setState(StateRace.FINISH));
+        Rocket.countRockets--;
+    }
+
+    public static int getCountRockets() {
+        return countRockets;
+    }
+
+    public static void setCountRockets(int countRockets) {
+        Rocket.countRockets = countRockets;
+    }
+
 
     @Override
     public String toString() {
@@ -107,38 +135,37 @@ public class Rocket implements Runnable{
                             switch (booster.getState()){
                                 case FORWARD:
                                     TimeUnit.MILLISECONDS.sleep(1000);
-                                    this.acumPower = this.forward(Optional.of(this.getGoalPower()));
 
+                                    this.acumPower = this.forward(Optional.of(this.getGoalPower()));
                                     printTotalPower(StateRace.FORWARD);
-                                    printWinner(this.acumPower);
+
+                                    if(printWinner(this.acumPower, booster.getState())) {
+                                        checkWinner();
+                                    }
 
                                     booster.notifyAll();
                                     Thread.currentThread().checkAccess();
                                     TimeUnit.MILLISECONDS.sleep(1000);
-
                                     break;
                                 case BACK:
                                     TimeUnit.MILLISECONDS.sleep(1000);
-                                    this.acumPower = this.back(Optional.of(this.getGoalPower()));
 
+                                    this.acumPower = this.back(Optional.of(this.getGoalPower()));
                                     printTotalPower(StateRace.BACK);
-                                    printWinner(this.acumPower);
+
+                                    if(printWinner(this.acumPower, booster.getState())) {
+                                        checkWinner();
+                                    }
 
                                     booster.notifyAll();
                                     Thread.currentThread().checkAccess();
                                     TimeUnit.MILLISECONDS.sleep(1000);
-
                                     break;
                                 case FINISH:
-                                    TimeUnit.MILLISECONDS.sleep(1000);
-                                    booster.notifyAll();
                                     Thread.currentThread().checkAccess();
-                                    TimeUnit.MILLISECONDS.sleep(1000);
-
                                     break;
                             }
                         }
-
                     }
                 }
                 TimeUnit.MILLISECONDS.sleep(1000);
