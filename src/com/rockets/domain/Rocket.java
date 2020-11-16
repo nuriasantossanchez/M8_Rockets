@@ -1,6 +1,6 @@
 package com.rockets.domain;
 
-import com.rockets.application.*;
+import com.rockets.application.factory.FactoryMethod;
 
 import java.util.*;
 import java.util.concurrent.TimeUnit;
@@ -20,7 +20,7 @@ public class Rocket implements Runnable{
 
         this.id=id;
         this.numberOfBoosters=numberOfBoosters;
-        this.boosters = Stream.generate(FactoryMethod::create)
+        this.boosters = Stream.generate(FactoryMethod::createBooster)
                     .limit(this.numberOfBoosters)
                     .collect(toList());
     }

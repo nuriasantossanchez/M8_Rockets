@@ -2,8 +2,6 @@ package com.rockets.view;
 
 import com.rockets.application.Controller;
 
-import java.util.concurrent.ExecutionException;
-
 public class RiceForward {
 
     private static Controller controller=Controller.getInstance();

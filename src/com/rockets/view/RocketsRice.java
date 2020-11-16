@@ -40,7 +40,5 @@ public class RocketsRice {
         System.out.println();
         boostersRocket2.stream().forEach(System.out::println);
         System.out.println("--------------------------------------------------");
-        System.out.println();
-
     }
 }
