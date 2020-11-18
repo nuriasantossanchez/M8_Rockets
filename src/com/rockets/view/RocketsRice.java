@@ -7,8 +7,15 @@ import com.rockets.domain.Rocket;
 import java.util.List;
 import java.util.Optional;
 
-import static java.util.stream.Collectors.toList;
-
+/**
+ * Clase de la capa View
+ *
+ * Crea los cohetes que van a participar en la carrera, en este caso 2, y sus respectivos propulsores,
+ * en este caso, 3 propulsores para el cohete1, con sus respectivas potencias maximas 10, 30, 80 y
+ * 6 propulsores para el cohete2 con las potencias maximas 30, 40, 50, 50, 30, 10
+ *
+ * Muestra por pantalla la informacion de los cohetes y sus respectivos propulsores
+ */
 public class RocketsRice {
 
     private static Controller controller=Controller.getInstance();
@@ -26,6 +33,7 @@ public class RocketsRice {
         boostersRocket2 = controller.addBoosterMaxPower(Optional.of(30),Optional.of(40),Optional.of(50),
                 Optional.of(50),Optional.of(30),Optional.of(10));
     }
+
     public void show(){
         System.out.println("--------------------------------------------------");
         System.out.println("CARRERA DE COHETES ....... ");

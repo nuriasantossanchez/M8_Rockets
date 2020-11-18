@@ -60,7 +60,7 @@ public class Controller {
      * Delega en la clase Factory la creacion de un objeto de tipo Rocket
      * Añade el objeto creado a un listado de objetos del mismo tipo
      *
-     * @param id, identificador del cohete
+     * @param id, String identificador del cohete
      * @param numberOfBoosters, numero de propulsores
      * @return objeto de tipo Rocket creado
      */
@@ -72,8 +72,12 @@ public class Controller {
     }
 
     /**
+     * Delega en el objeto Rocket la accion de añadir la potencia maxima
+     * a cada uno de sus propulsores
      *
-     * @param maxPower
+     * @param maxPower, listado de longitud variable que representa la potencia maxima
+     *                  que tendra cada propulsor. La longitud del listado varia en
+     *                  funcion del numero de propulsores del cohete
      * @return
      */
     public List<Booster> addBoosterMaxPower(Optional<Integer>... maxPower) {
@@ -82,8 +86,14 @@ public class Controller {
     }
 
     /**
+     * Setea la variable staic countRockets (clase Rocket) con el numero total de
+     * Rockets creados, almacenados en un listado de objetos de tipo Rocket
      *
-     * @param goalPower
+     * Recorre el listado de objetos de tipo Rocket creados y delega en cada objeto la accion
+     * de acelerar hasta alcanzar una potencia objetivo
+     *
+     * @param goalPower, potencia objetivo que han de alcanzar cada uno de los cohetes
+     *                   participantes en la carrera
      */
     public void forward(Integer goalPower){
         Rocket.setCountRockets(this.rockets.size());
@@ -95,8 +105,14 @@ public class Controller {
     }
 
     /**
+     * Setea la variable staic countRockets (clase Rocket) con el numero total de
+     * Rockets creados, almacenados en un listado de objetos de tipo Rocket
      *
-     * @param goalPower
+     * Recorre el listado de objetos de tipo Rocket creados y delega en cada objeto la accion
+     * de frenar hasta alcanzar una potencia objetivo
+     *
+     * @param goalPower, potencia objetivo que han de alcanzar cada uno de los cohetes
+     *                   participantes en la carrera
      */
     public void back(Integer goalPower){
         Rocket.setCountRockets(this.rockets.size());
@@ -109,14 +125,21 @@ public class Controller {
 
     /**
      *
-     * @return
+     * @return objeto de tipo ExecutorService que proporciona métodos para administrar
+     * el progreso de una o más tareas asincrónicas.
      */
     public ExecutorService getExec() {
         return exec;
     }
 
     /**
+     * Ejecuta de forma asincrona una accion, identificada por implementar la interfaz Runnable,
+     * que se completa mediante una tarea que se ejecuta en un ExecutorService dado después
+     * la ejecuccion de la acción
      *
+     * En este caso la acciones Runnables que se ejecutan de forma asincrona estan encapsuladas
+     * tanto en los objeto de tipo Rocket que se crean (2 en total, pero podrian ser mas),
+     * como en su respectivos Booster (9 en total, pero podrian ser mas)
      */
     public void execute(){
         for (Rocket rocket : this.rockets) {

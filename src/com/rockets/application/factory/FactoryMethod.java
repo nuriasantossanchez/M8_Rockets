@@ -21,7 +21,7 @@ public interface FactoryMethod {
      * por primera vez la interfaz, esto es cuando es accedida por primera vez
      *
      * @return objeto de tipo Booster que puede ser inicializado opcionalmente
-     *         con un parametro vacio
+     * con un parametro vacio
      */
     static Booster createBooster() {
         return new Booster(Optional.empty());
